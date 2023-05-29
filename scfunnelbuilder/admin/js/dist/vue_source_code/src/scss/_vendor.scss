@@ -1,0 +1,86 @@
+@import "./variables";
+@import "./mixins";
+.multi_select_input {
+  .multiselect-input {
+    background-color: transparent;
+    border: 1px solid #d9d9d9;
+    border-radius: 7px !important;
+    color: #3b3b3b;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 20px;
+    min-height: 46px;
+    padding: 0.825rem 1.5rem;
+    box-shadow: none;
+    &::placeholder {
+      color: $dark;
+    }
+    &.is-active {
+      box-shadow: none;
+    }
+  }
+  &.multiselect {
+    box-shadow: none;
+    &.is-active {
+      box-shadow: none;
+    }
+  }
+  &.has_error {
+    &.multiselect {
+      border: 1px solid #e92d2d !important;
+    }
+  }
+  .multiselect-clear-icon {
+    display: none;
+  }
+  .multiselect-clear {
+    background: transparent !important;
+    cursor: pointer;
+  }
+  .multiselect-single-label {
+    // padding-right: 30px;
+    padding-right: calc(1.85rem + var(--ms-px, 0.575rem) * 2);
+  }
+  .multiselect-options {
+    .multiselect-option {
+      min-height: 38px;
+      padding: 8px 12px;
+      &.is-pointed {
+        color: $dark;
+        background-color: #d8d8d8;
+      }
+      &.is-selected {
+        color: #fff;
+        background-color: $dark;
+      }
+    }
+  }
+  .multiselect-spinner {
+    background-color: #a0a7a4;
+  }
+}
+.multiselect-wrapper {
+}
+.multiselect-dropdown {
+  z-index: 9999 !important;
+  @include scrollbars($size: 6px, $foreground-color: transparent);
+  &:hover {
+    @include scrollbars($size: 6px, $foreground-color: #666363);
+  }
+}
+// auto complete
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  border: 2px solid $dark;
+  -webkit-text-fill-color: #3b3b3b;
+  -webkit-text-fill-background: transparent;
+  transition: background-color 5000s ease-in-out 0s;
+}

@@ -1,0 +1,41 @@
+<?php return array(
+    'root' => array(
+        'pretty_version' => 'dev-master',
+        'version' => 'dev-master',
+        'type' => 'library',
+        'install_path' => __DIR__ . '/../../',
+        'aliases' => array(),
+        'reference' => 'fd22412b435b5af0472edf41c7802e3c8a8fdb11',
+        'name' => '__root__',
+        'dev' => true,
+    ),
+    'versions' => array(
+        '__root__' => array(
+            'pretty_version' => 'dev-master',
+            'version' => 'dev-master',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../../',
+            'aliases' => array(),
+            'reference' => 'fd22412b435b5af0472edf41c7802e3c8a8fdb11',
+            'dev_requirement' => false,
+        ),
+        'behat/transliterator' => array(
+            'pretty_version' => 'v1.5.0',
+            'version' => '1.5.0.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../behat/transliterator',
+            'aliases' => array(),
+            'reference' => 'baac5873bac3749887d28ab68e2f74db3a4408af',
+            'dev_requirement' => false,
+        ),
+        'jeroendesloovere/vcard' => array(
+            'pretty_version' => 'v1.7.3',
+            'version' => '1.7.3.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../jeroendesloovere/vcard',
+            'aliases' => array(),
+            'reference' => '2b8b6190c613d368b8cb6552e59cf6e6e7d0aea9',
+            'dev_requirement' => false,
+        ),
+    ),
+);

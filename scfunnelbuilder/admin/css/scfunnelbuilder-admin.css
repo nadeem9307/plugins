@@ -1,0 +1,376 @@
+/**
+ * All of the CSS for your admin-specific functionality should be
+ * included in this file.
+ */
+
+
+.search_area{width: 50%;display: inline-block;}
+.scfunnel_search{    margin-bottom: 40px; 
+    /* margin-top: 50px; */
+}   
+
+.dashboard-nav__content {
+    /* margin-top: 100px; */
+    padding: 30px 30px 0px 0px;
+}
+
+.search_area{}
+.search_area input{ width: 300px;padding: 8px 23px;border: 1px solid #D9D9D9;border-radius: 7px;outline: 0 !important;
+box-shadow: none !important;font-size: 16px;font-weight: 500;color: black; }
+.search_area input:focus{border-color: #D9D9D9 !important;}
+.search_area .input-group {display: inline-block;position: relative;}
+.search_area button{position: absolute;right: 10px;border: 0;background-color: transparent;top: 0;
+bottom: 0;outline: 0 !important;cursor: pointer;}
+.search_area button img{width: 20px;}
+.add_new{width: 50%;float: right;text-align: right;}
+.btn_and_stng{display: flex;align-items: center!important;justify-content: flex-end!important;}
+.add_new_fnl button{background: #131313;border-radius: 5px;padding: 10px 20px;color: white;
+font-weight: 600;border-color: transparent;cursor: pointer;}
+.stng_btn_wrap{margin-left: 20px;}
+.stng_btn_wrap img{}
+.action_btn_wrap {display: flex;     align-items: center;     position: relative;}  
+.action_btn_wrap > div{    padding-right: 20px;}    
+.wrap_listing_content{display: flex;align-items: center;justify-content: space-between;background: #FFFFFF;
+box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);border-radius: 2px;margin-top: 15px;padding: 20px 35px;}
+.wrap_listing_content h3{color: #000000;font-weight: 500;font-size: 15px;line-height: 20px;     margin: 0;}
+.wrap_listing_content p{color: #8A8A8A;font-weight: 500;font-size: 14px;line-height: 20px;     margin: 0;}
+.badge_cl{border-radius: 20px;font-weight: 500;font-size: 14px;padding: 3px 10px;display: inline-block;}
+.enabled{background: #95E9FC; color: #008F98;}
+.draft{background: #DBDBDB; color: #5E5E5E;}
+.triger_menu, .submenu_veiw {display: none !important;}
+.icon_cl {position: relative;display: block;cursor: pointer;}
+.triger_menu:checked~.submenu_veiw {display: block !important;position: absolute;background-color: white;width: 120px;
+left: -28px;top: 37px;z-index: 99;} 
+ul.submenu_veiw li {padding: 10px 10px;border-bottom: 1px solid #e7e7e7;margin-bottom: 0;}  
+ul.submenu_veiw li a{text-decoration: none;color: black;font-weight: 600;}   
+.pagination_custom {display: flex;justify-content: flex-end;padding-left: 0;margin: 20px 0;border-radius: 4px;}
+.pagination_custom>li {display: inline;}
+.pagination_custom a{  position: relative;float: left;padding: 6px 12px;margin-left: -1px;line-height: 1.42857143; text-decoration: none;font-weight: 600;font-size: 17px; color: black}
+.pagination_custom .pre_btn,
+.pagination_custom .nxt_btn{ color: #337ab7;background-color: #fff;border: 1px solid #ddd;border-radius: 5px;}
+.pagination_custom a:focus{outline: 0 !important; box-shadow: inherit !important;}
+   
+    
+.sc_funnel_header{}
+.header_funnel_data{}
+.header_funnel_data{box-shadow: 0px 4px 46px rgba(0, 0, 0, 0.1);background-color: black;padding: 25px;margin-top: 0px;
+left: -20px;position: absolute;right: 0;display: flex;align-items: center!important;justify-content: flex-end!important;}  
+.header_funnel_data{    box-shadow: 0px 4px 46px rgba(0, 0, 0, 0.1);background-color: black;padding: 8px 20px;margin-top: 0px;left: -20px;position: absolute;right: 0;height: 50px;}
+.sc_funnel__header_left{width: 50%;display: inline-block;}
+.sc_funnel__header_right{width: 50%;float: right;text-align: right;display: flex; align-items: center!important;justify-content: flex-end!important;padding: 8px;}
+.stng_btn_hdr{margin-right: 20px}
+.stng_btn_hdr a{color: #FFFFFF;font-weight: 400;font-size: 16px;line-height: 21px;text-decoration: none; outline: 0 !important; box-shadow: inherit;}
+.header_drp_down_cl {margin-top: 9px;}
+.dropbtn_stng {background-color: transparent;color: white;font-size: 16px;border: none;cursor: pointer;
+display: inline-block;padding: 10px;}
+.dropbtn_stng:hover, .dropbtn_stng:focus {background-color: transparent;}
+.dropdown_stng {position: relative;display: inline-block; background-color: transparent !important;}
+.dropdown-content {display: none;position: absolute;background-color: #f1f1f1;min-width: 160px;
+overflow: auto;box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);z-index: 1;left: -140px;margin-top: 8px;}
+.dropdown-content a {color: black;font-size: 14px;border: none;cursor: pointer;background-color: transparent;
+display: block;text-align: left;padding: 7px 10px;text-decoration: none;border-bottom: 1px solid #00000030;font-weight: 500; }
+.dropdown_stng a:hover {background-color: #ddd;}
+.show_stng {display: block;}    
+    
+.add_funnel_list{}
+.listed_funnel_data{display: flex;flex-wrap: wrap; justify-content: space-between!important;} 
+.funnel_list_item{ flex: 0 0 auto;width: 23%;margin: 0 0.5%;height: 264px;     margin-bottom: 12px;}
+.use_your_own{background: #F5F5F5;border: 2px dashed #B6B1B1;border-radius: 3px;align-items: center!important;
+flex-direction: column!important;flex-wrap: nowrap!important;display: flex !important;justify-content: center;}
+    
+.use_your_own button{background: #131313;border-radius: 5px;width: 142px;height: 40px;padding: 10px 20px;border-color: transparent;color: white;font-weight: 500;font-size: 13px;line-height: 15px; cursor: pointer}
+    
+.list_img_view {background: #e7e7e7;border-radius: 3px;}
+.name_view_view{display: flex;align-items: center!important;justify-content: space-between!important;padding: 13px 18px;} 
+.name_data_show h5{margin: 0;font-weight: 500;font-size: 13px;color: black;}
+.view_btn_click a{}
+.view_btn_click a img{}
+.list_img_view_area{position: relative; height: 215px; overflow: hidden}
+.list_img_view_area .main_img_show{width: 100%;height: 215px; border-top-left-radius: 3px; border-top-right-radius: 3px}
+.overlay_list_img_view {position: absolute;top: 0;bottom: 0;left: 0;right: 0;align-items: center!important;
+flex-wrap: nowrap!important;display: flex !important;justify-content: center;background-color: #00000075;
+transition: 0.5s;transform: scale(0);border-top-left-radius: 3px; border-top-right-radius: 3px}
+.list_img_view:hover .overlay_list_img_view {transform: scale(1); transition: 0.5s;}
+.overlay_list_img_view img{    width: 20px;height: auto;}
+.overlay_list_img_view span {color: white;font-weight: 600;margin-left: 5px;}
+.overlay_list_img_view a{outline: 0; box-shadow: none !important}
+   
+    .funnels_count{}
+    .funnels_count h3{}
+    
+    
+    .tab_wrap_data{       display: flex;
+    align-items: center!important;
+    justify-content: flex-end!important;}
+    .tab_wrap_data li{    margin-left: 15px;}
+    .tab_wrap_data li a{background: #FFFFFF;
+    border: 1px solid #D9D9D9;
+    border-radius: 5px;
+    padding: 9px 28px;
+    text-decoration: none;
+        color: black;
+    font-weight: 600;
+    font-size: 15px;}
+    
+    .select_fiter{    width: 50%;
+    display: inline-block; position: relative;}
+    .tab_sec_filter{    width: 50%;
+    float: right;
+    text-align: right;}
+    
+    .funnels_tab_filtering {
+    margin-bottom: 50px;
+}
+    
+    .active_tab{    background: #000000 !important;
+    color: white !important;} 
+    
+    
+    .bact_btn_here{position: absolute; top: 20px; cursor: pointer}    
+    
+    .filter_dropdown_here {
+    padding-left: 50px;
+}
+
+.filter_dropdown_here select{width: 200px;
+    padding: 6px 8px;
+    border-color: transparent;
+    margin-top: 8px;
+}
+.create_funnel_top_level, .setting_modal_top_level{
+    display: inline-block;
+    border: none;
+    height: 38px;
+    font-size: 14px;
+    line-height: 38px;
+    color: #fff;
+    font-weight: 500;
+    padding: 0 30px;
+    min-width: 130px;
+    cursor: pointer;
+    text-align: center;
+    letter-spacing: 0.2px;
+    border-radius: 10px;
+    text-transform: capitalize;
+    background-color: #131313
+}
+
+/***********modal pop top level *********/
+.create_funnel_top_level_modal, .setting_modal{
+    display:none;
+    position: absolute;
+    top: calc(50% - 160px);
+    left: 50%;
+    background: white;
+    width: 400px;
+    z-index: 999;
+    transform: translate(-50%, -50%);
+    padding: 14px 20px 20px;
+    border-radius: 10px;
+    box-shadow: 0 1px 2px 0 rgba(190, 190, 215, 0.2);
+    transition: all 0.3s ease;
+}
+.create_funnel_top_level_modal .header h3, .setting_modal .header h3{
+   display: inline-flex;
+}
+
+.create_funnel_top_level_modal .header, .setting_modal .header{
+  /* width: 100%;
+  height: 70px;
+  border-radius: 10px 10px 0px 0px;
+  border-bottom: 2px solid #ccc; */
+}
+.setting_label label {
+  display: contents !important;
+}
+.setting_modal,.create_funnel_top_level_modal{
+  cursor: pointer;
+}
+
+.create_funnel_top_level_modal .header a, .setting_modal .header a{
+  text-decoration: none;
+  float: right;
+  line-height: 70px;
+  margin-right: 20px;
+  color: #aaa;
+}
+
+.create_funnel_top_level_modal .modal-body,.setting_modal .modal-body{
+  width: 100%;
+  height: 250px;
+}
+
+.create_funnel_top_level_modal form, .setting_modal form{
+    margin-top: 20px;
+}
+
+.create_funnel_top_level_modal form label, .setting_modal form label{
+  display: block;
+  margin-left: 12%;
+  margin-top: 10px;
+  font-family: sans-serif;
+  font-size: 1rem;
+}
+
+.create_funnel_top_level_modal form input, .setting_modal form select{
+  display: block;
+  width: 100%;
+  /* margin-left: 12%; */
+  margin-top: 10px;
+  border-radius: 3px;
+  font-family: sans-serif;
+  border: 1px solid #E5E8F3;
+}
+
+.create_funnel_top_level_modal #first_label{
+  padding-top: 30px;
+}
+
+.create_funnel_top_level_modal #second_label{
+  padding-top: 25px;
+}
+
+
+.create_funnel_top_level_modal .footer, .setting_modal .footer{
+  width: 100%;
+  height: 80px;
+  /* border-radius: 0px 0px 10px 10px; */
+  /* border-top: 2px solid #ccc; */
+}
+
+.create_funnel_top_level_modal .footer button, .setting_modal button{
+  /* float: right; */
+  margin-right: 10px;
+  margin-top: 18px;
+  text-decoration: none; 
+}
+
+
+.view_on_loading{
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  text-align: center;
+  align-items: center!important;
+  flex-wrap: nowrap!important;
+  padding-top: 30%;
+  justify-content: center;
+  background-color: #000000cc;
+  display: none;}
+.view_on_loading p{    color: white;
+  font-size: 16px;}
+
+/****MEDIA QUERIES****/
+
+@media screen and (min-width: 600px){
+
+  .create_funnel_top_level_modal{
+    /* width: 500px; */
+    /* height: 300px; */
+    /* margin-left: calc(50vw - 250px); */
+    margin-top: calc(50vh - 150px);
+  }
+  .setting_modal{margin-top: calc(30vh - 260px)};
+
+
+  .create_funnel_top_level_modal .header, .setting_modal .header{
+    width: 100%;
+    height: 40px;
+  }
+
+ .create_funnel_top_level_modal .header a, .setting_modal .header a{
+    line-height: 40px;
+    margin-right: 10px;
+  }
+
+  .create_funnel_top_level_modal .modal-body, .setting_modal .modal-body {
+    width: 100%;
+    height: auto;
+  }
+
+  .create_funnel_top_level_modal form label,.setting_modal form label{
+    margin-left: 10%;
+    margin-top: 10px;
+  }
+
+  .create_funnel_top_level_modal form input, .setting_modal form select{
+    width: 100%;
+    /* margin-left: 10%; */
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #E5E8F3;
+  }
+
+  .create_funnel_top_level_modal #first_label{
+  padding-top: 0px;
+  }
+
+  .create_funnel_top_level_modal #second_label{
+    padding-top: 0px;
+  }
+
+  .create_funnel_top_level_modal .footer, .setting_modal .footer{
+    width: 100%;
+    height: 70px;   
+  }
+
+  .create_funnel_top_level_modal .footer button, .setting_modal .footer button{
+    /* float: right; */
+    margin-right: 10px;
+    margin-top: 10px;
+  }
+
+}
+
+/*LARGE SCREEN*/
+@media screen and (min-width: 1300px){
+
+}
+
+/****ANIMATIONS****/
+
+@keyframes fadeIn_Modal {
+  from{
+    opacity: 0;
+  }
+  to{
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn_Container {
+  from{
+    opacity: 0;
+  }
+  to{
+    opacity: 0.9;
+  }
+}
+
+/********* funnel canvas css *********/
+.steps_left_sidebar.open {
+  left: 39px !important;
+  top: 105px !important;
+}
+.toggle_stepper {
+  right: -33px !important;
+}
+#scfunnel-root header {
+  top: 29px !important;
+  left: 27px !important;
+}
+#scfunnel-root .vue-flow{
+  position: relative;
+    width: 100%;
+    min-height: 100vh;
+    overflow: hidden;
+    z-index: 0;
+}
+#scfunnel-root .steps_left_sidebar{
+  z-index: unset !important;
+}
+#scfunnel-root .sidebar_wrapper {
+  top: 105px;
+}

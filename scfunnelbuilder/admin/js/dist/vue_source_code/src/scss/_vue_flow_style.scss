@@ -1,0 +1,200 @@
+// drag and drop
+
+.dndflow {
+  // flex-direction: column;
+  display: flex;
+  height: 100%;
+}
+// .dndflow aside {
+//   color: #fff;
+//   font-weight: 700;
+//   border-right: 1px solid #eee;
+//   padding: 20px;
+//   font-size: 12px;
+//   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+// }
+.dndflow aside .nodes > * {
+  margin-bottom: 13px;
+  cursor: grab;
+  font-weight: 500;
+  // background-color: #ffffff;
+  // border: 1px solid #f2f2f2;
+  // box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.05);
+  // border-radius: 7px;
+}
+// .dndflow aside .description {
+//   margin-bottom: 10px;
+// }
+// .dndflow .vue-flow-wrapper {
+//   flex-grow: 1;
+//   height: 100%;
+// }
+// @media screen and (min-width: 640px) {
+//   .dndflow {
+//     flex-direction: row;
+//   }
+//   .dndflow aside {
+//     min-width: 25%;
+//   }
+// }
+// @media screen and (max-width: 639px) {
+//   .dndflow aside .nodes {
+//     display: flex;
+//     flex-direction: row;
+//     gap: 5px;
+//   }
+// }
+// .sidebar_dndGGGJ {
+//   position: relative;
+// }
+.steps_left_sidebar {
+  .custom_node_type {
+    width: 100%;
+    border: 1px solid #dfdfdf;
+    padding: 0;
+    box-shadow: none;
+    .img_wrap {
+      width: 30%;
+    }
+    h5 {
+      font-weight: 700;
+      font-size: 20px;
+      line-height: 23px;
+      color: #000;
+    }
+  }
+}
+
+// Controls styles
+.control_panel {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  left: initial;
+  .ctrl_btns {
+    display: flex;
+    flex-direction: column;
+    background: #ffffff;
+    box-shadow: 0px 4px 2px rgba(0, 0, 0, 0.05);
+    border-radius: 10px;
+    ._ctrl {
+      background-color: #fff;
+      padding: 10px;
+      &:first-child {
+        border-bottom: 1px solid #f4f4f4;
+      }
+      img {
+        width: 30px;
+        height: 30px;
+      }
+    }
+  }
+}
+
+.steps_sidebar_dnd {
+  .vue-flow__panel {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    left: initial;
+  }
+  // .vue-flow__container {
+  //   position: absolute;
+  //   height: auto;
+  //   width: 100%;
+  //   left: 0;
+  //   top: 0;
+  // }
+}
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+}
+.vue-flow__controls .vue-flow__controls-button {
+  background: #292524;
+  fill: #fffffb;
+  border-color: #fffffb;
+}
+.controls button {
+  padding: 4px;
+  border-radius: 5px;
+  font-weight: 600;
+  -webkit-box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 5px 10px #0000004d;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.controls button:hover {
+  transform: scale(102%);
+  transition: 0.25s all ease;
+}
+
+// controls style closed
+
+/* customized edge */
+.edgebutton {
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  border-radius: 4px !important;
+  padding: 0;
+  border: 0;
+  outline: none;
+  background-color: #000;
+  color: #fff;
+  margin: 0;
+  cursor: pointer;
+}
+/*  */
+.edgebutton:hover {
+  box-shadow: 0 2px 16px 1px #c9c5c580;
+}
+/* custom node */
+.selected {
+  .node_card {
+    border: 1px solid #c1fa46;
+  }
+  .selected_node {
+    border: 1px solid #c1fa46;
+  }
+}
+.custom_style_flow {
+}
+/*  */
+.customnodeflow .vue-flow__node-custom {
+  border: 1px solid #777;
+  padding: 10px;
+  border-radius: 10px;
+  background: whitesmoke;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  max-width: 250px;
+}
+.customnodeflow button {
+  padding: 5px;
+  width: 25px;
+  height: 25px;
+  border-radius: 25px;
+  -webkit-box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 5px 10px #0000004d;
+  cursor: pointer;
+}
+.customnodeflow button:hover {
+  opacity: 0.9;
+  transform: scale(105%);
+  transition: 0.25s all ease;
+}
+// .animated-bg-gradient {
+//   background: linear-gradient(122deg, #6f3381, #81c7d4, #fedfe1, #fffffb);
+//   background-size: 800% 800%;
+//   -webkit-animation: gradient 4s ease infinite;
+//   -moz-animation: gradient 4s ease infinite;
+//   animation: gradient 4s ease infinite;
+// }
