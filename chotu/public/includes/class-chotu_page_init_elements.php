@@ -1,196 +1,224 @@
 <?php
 use JeroenDesloovere\VCard\VCard;
-class Chotu_Page_Init_Elements{
-    public function __construct(){
-      /**
-       * https://developer.wordpress.org/reference/hooks/wp/
-       */
-      add_action( 'wp', array($this, 'chotu_set_captain_cookie' ), 1);
-      add_action( 'wp', array($this, 'chotu_check_status' ), 2);
-      add_action( 'wp', array($this, 'chotu_set_shop_url' ), 3);
-      add_action( 'wp', array($this, 'chotu_whatsapp_login' ), 4);
-      /**
-       * https://developer.wordpress.org/reference/hooks/wp_login/
-       */
-      add_action( 'wp_login', array($this, 'chotu_captain_login' ), 10, 2);
-      add_action( 'wp', array($this, 'chotu_restrict_captain' ), 6);
+
+class Chotu_Page_Init_Elements
+{
+    public function init()
+    {
+        /**
+         * https://developer.wordpress.org/reference/hooks/wp/
+         * https://developer.wordpress.org/reference/hooks/wp_login/
+         */
+        
+        add_action( 'wp', array($this, 'chotu_set_captain_cookie' ), 1);
+        add_action( 'wp', array( $this, 'chotu_set_shop_url' ), 3);
+        add_action( 'wp', array( $this, 'chotu_check_status' ), 4);
+        add_action( 'wp', array( $this, 'chotu_restrict_captain' ), 6);
+        add_filter( 'redirect_canonical', array( $this, 'chotu_disable_partial_search' ) );
+        add_filter( 'gettext', array( $this, 'chotu_change_translated_text' ), 20, 3);
+        
+    }
+    /**
+     * disable all the partial search URLs. 
+     * DISABLE THIS: chotu.com/foo redirects to chotu.com/food-delivery
+     */
+    public function chotu_disable_partial_search($redirect_url) {
+        if (is_404()) {
+            return false;
+        }
+        return $redirect_url;
     }
 
-    // when a user visits a captain shop:
-    // 1. unset the previous captain cookie first 
-    // 2. set it when the captain shop is opened through URL
-    // $_GET['captain'] = /?captain= (URL prameter)
+    /**
+     * Translate Text
+     * change text on different pages:
+     *      1. you cannot add another "%s" to your cart. > "%s" is already in your bag.
+     *	    2. update cart > update note
+    *	    3. Display name > My Shop Name
+    */ 
+    public function chotu_change_translated_text( $translated, $text, $domain ){
+        switch (strtolower($translated)) {
+            case 'you cannot add another "%s" to your cart.':
+                // product single page
+                $translated = '"%s" is already in your shopping bag.';
+                break;
+            case 'update cart':
+                // cart page
+                $translated = 'Update note';
+                break;
+            case 'Display name':
+                // my account page, logged in
+                $translated = 'My Shop Name';
+                break;
+            case 'my account':
+                // my account page, logged in
+                $translated = 'My Shop';
+                break;
+        }
+            return $translated;
+    }
+    /**
+     * chotu_set_captain_cookie
+     * when a user visits a captain shop:
+     *   1. unset the previous captain cookie first
+     *   2. set it when the captain shop is opened through URL like:
+     *          * $_GET['captain'] = /?captain= (URL prameter)
+     * if user not logged in:
+     *      if current page is author page, set captain cookie to the user_login
+     *      if url has ?captain= param, set that captain cookie to the user_login
+     * @return void
+     */
     public function chotu_set_captain_cookie(){
-      global $current_user, $wp, $wp_query, $_COOKIE;
-      $current_page = get_queried_object();
-      //if URL has captain_ID AND captain is NOT logged in
-      if(isset($_GET['captain']) && !is_user_logged_in()){
-          if(chotu_get_captain_id($_GET['captain'])){             //if the captain in URL param is valid captain
-            setcookie('captain', '', time() - 3600, '/');                  //delete the cookie
-            setcookie( 'captain', $_GET['captain'],(time()+259200), "/"); // sets new cookie
-            $_COOKIE['captain'] = $_GET['captain'];               // set captain cookie in global
-            chotu_check_cart_captain($_GET['captain']);
-            chotu_set_visited_captain_shop_history();                           // check if captain changed, delete wishlist, create new
-         }
-      }else if(isset($current_page->user_login) && !is_user_logged_in()){ // captain shop page, captain NOT logged in
-        if(in_array('captain',$current_page->roles)){
-          $user_login = $current_page->user_login;
-          setcookie('captain', '', time() - 3600, '/');
-          setcookie( 'captain', $user_login,(time()+259200), "/");
-          $_COOKIE['captain'] = $user_login;
-          chotu_check_cart_captain();
-          chotu_set_visited_captain_shop_history($user_login);
-        }  
-        
-      }
-    }
-
-
-    // to set the chotu status and unset the captain cookie on captain login
-    public function chotu_check_status(){
-      global $chotu_status,$current_user,$chotu_current_captain;
-      $captain = false;
-      if(is_user_logged_in()){
-        $user_roles = $current_user->roles;
-        if(in_array('captain',$user_roles)){
-          $captain = true;
-        }
-      }
-      if(is_user_logged_in()){
-        if($captain){
-          $chotu_status = "C";
-          $chotu_current_captain = $current_user->ID;
-        }else{
-          $chotu_status = "D";
-          $chotu_current_captain = "";
-        }
-      }else{
-        if(isset($_COOKIE['captain'])){
-          if(chotu_get_captain_id($_COOKIE['captain'])){
-            $chotu_status = "B";
-            $chotu_current_captain = chotu_get_captain_id($_COOKIE['captain']);
-          }else{
-            $chotu_status = "A";
-            $chotu_current_captain = "";
-            chotu_reset_captain();
-            
-          }
-        }else{
-          $chotu_status = "A";
-          $chotu_current_captain = "";
-        }
-      }
-    }
-
-
-    // the login URL is validated and captain is redirected to home page on login
-    public function chotu_whatsapp_login(){
-        /* create author nonce for login and redirect to my-account page*/ 
-        if(isset($_GET['auth']) && (isset($_GET['mynonce']))) {
-            $user = get_user_by('login', $_GET['auth']);
-            $verify_nonce = get_user_meta($user->ID,'verify_nonce',true);
-            $verify_nonce_expiry = get_user_meta($user->ID,'verify_nonce_expiry',true);
-            $date = date('Y-m-d H:i:s');
-            if ($verify_nonce == $_GET['mynonce'] && $verify_nonce_expiry >= $date) {
-              wp_clear_auth_cookie();
-              delete_user_meta($user->ID,'verify_nonce',$verify_nonce);
-              delete_user_meta($user->ID,'verify_nonce_expiry',$verify_nonce_expiry);
-              wp_set_current_user( $user->ID, $user->user_login );
-              wp_set_auth_cookie( $user->ID,true );
-              do_action( 'wp_login', $user->user_login, $user );
-              wp_redirect( home_url('/').$user->user_login.'/?success=true' );
-              exit;
-            }
-            wp_redirect( home_url() .'?error=session_timeout');
-            //exit;
-        }
-        
-    }
-
-
-    // to remove the "author" mentioned in the captain shop URL
-    public function chotu_set_shop_url() {
-        global $wp_rewrite,$current_user;
-        if (is_admin()){
-            /* make the /author/ base as null*/ 
-            if( 'author' == $wp_rewrite->author_base ){
-            flush_rewrite_rules();
-            $wp_rewrite->author_base = null;
-            } 
-        }else if( 'author' == $wp_rewrite->author_base ) {
-            flush_rewrite_rules();
-            $wp_rewrite->author_base = null;
-        }
-    }
-    // to set unset the captain cookie on captain login and redirect to captain home page
-    public function chotu_captain_login($user_login, $user){
-      global $current_user,$chotu_status;
-        // $WCWL_Session = new YITH_WCWL_Session();
-        // $WCWL_Session->forget_session();      // on captain login, delete the wishlist cookie
-        chotu_reset_captain();  // on captain login, delete the captain cookie
-        if($user){
-          $user_roles = $user->roles;
-          if(in_array('captain',$user_roles)){
-            $url = home_url('/').$user_login.'/';
-            
-            wp_safe_redirect($url);
-            exit();
-          }
-        }
-    }
-    //  to restrict a logged in captain from opening a different captain shop and redirect to his/her home page
-    public function chotu_restrict_captain(){
-        global $chotu_current_captain, $current_user,$chotu_status;
-        switch ($chotu_status) {
-          case "A":
-            break;
-          case "B":
-            break;
-          case "C":
+        if(!is_user_logged_in()){
             $current_page = get_queried_object();
-            if(isset($current_page->user_login)){
-              if($current_user->user_login != $current_page->user_login){
-                $url = home_url('/').$current_user->user_login.'/';
-                wp_safe_redirect($url);
-                exit();
-              }
+            $captain = '';
+            if (isset($current_page->user_login)){
+                $captain = $current_page->user_login;
+            }elseif (isset($_GET['captain'])){
+                if (username_exists( $_GET['captain'] )){
+                    $captain = $_GET['captain'];
+                }
             }
-            break;
-          case "D":
-            break;
+            
+            if(!empty($captain)){
+                if(isset($_COOKIE['captain'])){
+                    if($captain !== $_COOKIE['captain']){
+                        chotu_reset_captain();
+                    }
+                }
+                setcookie('captain', $captain, (time() + 259200), "/");
+                $_COOKIE['captain'] = $captain;
+            }
         }
     }
+
+    /**
+     * chotu_check_status
+     * to set the chotu status and unset the captain cookie on captain login
+     * A: no login, no cookie | Redirect to /start directly
+     * B: no login, captain cookie set
+     * C: login, captain
+     * D: login, admin
+     * @return void
+     */
+    public function chotu_check_status(){
+        global $chotu_status, $current_user, $chotu_current_captain;
+       
+        if (is_user_logged_in()) {
+            $user_roles = $current_user->roles;
+            if (in_array('captain', $user_roles)) {
+                $chotu_status = "C";
+                chotu_reset_captain();
+                $chotu_current_captain = new Captain_User($current_user->ID);
+            } else {
+                chotu_reset_captain();
+                $chotu_status = "D";
+                $chotu_current_captain = new Captain_User($current_user->ID);
+            }
+        }  else {
+            $default_language = get_chotu_default_language();
+            $url = get_site_url(2,$default_language,'https');
+            if (isset($_COOKIE['captain'])) {
+                if ($user = get_user_by( 'login', $_COOKIE['captain'] )) {
+                    $chotu_status = "B";
+                    $chotu_current_captain = new Captain_User($user->ID);
+                } else {
+                    $chotu_status = "A";
+                    $chotu_current_captain = "";
+                    chotu_reset_captain();
+                    if(!is_page(array('bill', 'open','my-account','qr'))){
+                       
+                        wp_redirect($url, 301);
+                        exit();
+                    }
+                }
+            } else {
+                $chotu_status = "A";
+                $chotu_current_captain = "";
+                chotu_reset_captain();
+                if(!is_page(array('bill', 'open','my-account','qr'))){
+                    wp_redirect($url, 301);
+                    exit();
+                }
+            }
+        }
+    }
+    
+    /**
+     * chotu_set_shop_url
+     * to remove the "author" mentioned in the captain shop URL
+     * @return void
+     */
+    public function chotu_set_shop_url(){
+        global $wp_rewrite;
+            if ('author' == $wp_rewrite->author_base) {
+                flush_rewrite_rules();
+                $wp_rewrite->author_base = null;
+            }
+    }
+    
+    /**
+     * chotu_restrict_captain
+     * to restrict a logged in captain from opening a different captain shop and redirect to his/her home page    
+     * @return void
+     */
+    public function chotu_restrict_captain(){
+        global $current_user, $chotu_status;
+        switch ($chotu_status) {
+            case "A":
+            case "B":
+            case "D":
+                break;
+            case "C":
+                $current_page = get_queried_object();
+                if (isset($current_page->user_login)) {
+                    if ($current_user->user_login != $current_page->user_login) {
+                        $url = $current_user->user_url;
+                        wp_safe_redirect($url);
+                        exit();
+                    }
+                }
+                break;
+        }
+    }
+
 }
-new Chotu_Page_Init_Elements();
-add_action('init','chotu_process_URLparams');
-function chotu_process_URLparams(){
-  if(isset($_GET['error'])){
-    $captain_onbn = get_option('captain_onboarding_number');
-    wc_add_notice('<div style="margin-top:50px">This login link has expired. Please click  👇 <span class="cta_button"><a class="show-for-small" href="https://wa.me/'.$captain_onbn.'/?text=open">Open</a></span></div>','notice');
-  }
-  if(isset($_GET['success'])){
-    wc_print_notice( __("Your login has been successful", "woocommerce"), "success" );
-  }
-  if(isset($_GET['reset_cookie'])){ 
-    chotu_reset_captain();
-  }
-  if(isset($_GET['download_vcard'])){
+$chotu_init_element = new Chotu_Page_Init_Elements();
+$chotu_init_element->init();
+
+/**
+ * process the URL params
+ * url params not found at the time of init, hence this is outside
+ */
+add_action('wp', 'chotu_process_URLparams');
+function chotu_process_URLparams()
+{
+    if (isset($_GET['error'])) {
+        $captain_onbn = chotu_get_option('captain_onboarding_number');
+        wc_add_notice('<div style="margin-top:50px">Your password has changed. Please login by clicking 👇 <BR><span class="cta_button"><a class="show-for-small" href="https://wa.me/' . $captain_onbn . '/?text=open">Login</a></span><BR>Please enter send on WhatsApp.</div>', 'notice');
+    }
+    if (isset($_GET['success'])) {
+        wc_print_notice(__("Your login has been successful", "woocommerce"), "success");
+    }
+    if (isset($_GET['reset_cookie'])) {
+        chotu_reset_captain();
+    }
+    if (isset($_GET['download_vcard'])) {
         // define vcard
         ob_get_clean();
-        if(isset($_COOKIE['captain'])){
-          ob_get_clean();
-          $vcard 	= new VCard();
-          $user 	= get_user_by('login',$_COOKIE['captain']);
-          // add personal data
-          $vcard->addName($user->display_name);
-          $vcard->addNote('chotu');
-          $vcard->addPhoneNumber($user->user_login, 'WORK');
-          $vcard->addURL($user->user_url);
-          $vcard->getOutput();
-          echo $vcard->download();
-          exit();
+        if (isset($_COOKIE['captain'])) {
+            ob_get_clean();
+            $vcard = new VCard();
+            $user = get_user_by('login', $_COOKIE['captain']);
+            // add personal data
+            $vcard->addName($user->display_name);
+            $vcard->addNote('chotu');
+            $vcard->addPhoneNumber($user->user_login, 'WORK');
+            $vcard->addURL($user->user_url);
+            $vcard->getOutput();
+            echo $vcard->download();
+            exit();
         }
-        //echo $vcard;
-
-  }
+    }
 }
+

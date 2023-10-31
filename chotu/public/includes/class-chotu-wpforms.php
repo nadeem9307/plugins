@@ -1,76 +1,73 @@
 <?php
-class Chotu_WPForms{
-    public function __construct(){
-         /**
+class Chotu_WPForms
+{
+    public function __construct()
+    {
+        /**
+         * 06-Sep-2023 | Not reviewed, TBD Later
          * chotu_wpforms_set_redirect_washare
-         *
+         * on form submit, call the function chotu_form_place_wa_order
+         * chotu_form_place_wa_order is in code snippet
          * @param  mixed $fields
          * @param  mixed $entry
          * @param  mixed $form_data
          * @param  mixed $entry_id
          * @return void
          */
-        add_action( 'wpforms_process_complete', function($fields, $entry, $form_data, $entry_id){
-            if(!empty($fields)){
-                if(isset($_COOKIE['captain'])){
-                $captain_id = chotu_get_captain_id($_COOKIE['captain']);
-                if($captain_id){
-                    $url = chotu_form_place_wa_order($captain_id,$fields,$form_data,$entry_id);
-                    chotu_reset_captain();
-                    //$form_data['settings']['confirmations'][1]['redirect'] = $url;
-                    header("Location: $url");
-                    exit;
-                }
+        add_action('wpforms_process_complete', function ($fields, $entry, $form_data, $entry_id) {
+            if (!empty($fields)) {
+                // yravi-comment: should we not use the $chotu_status = B here?
+                if (isset($_COOKIE['captain'])) {
+                    $captain = get_user_by( 'login', $_COOKIE['captain'] );
+                    if ($captain) {
+                        $url = chotu_form_place_wa_order($captain->ID, $fields, $form_data, $entry_id);
+                        $url = str_replace(PHP_EOL, ', ', $url);
+                        //chotu_reset_captain();
+                        //$form_data['settings']['confirmations'][1]['redirect'] = $url;
+                        header("Location: $url");
+                        exit;
+                    }
                 }
             }
-        }, 10, 4 );
+        }, 10, 4);
 
         /**
-         * Add code to footer for wp-forms
+         * to set the captain_mobile_number from hidden field into the entry
          *
          * @link   https://wpforms.com/developers/how-to-create-additional-formats-for-the-date-field/
          */
 
-        add_action( 'wpforms_wp_footer_end', function(){
-            if(isset($_COOKIE['captain'])){
-                $phone_number = chotu_append_isd_code($_COOKIE['captain']);
-                $start_url = home_url('/oye/?cookie=true');
+        add_action('wpforms_wp_footer_end', function () {
+            // yravi-comment: should we not use the $chotu_status = B here?
+            if (isset($_COOKIE['captain'])) {
+                $phone_number = chotu_prepend_isd_code($_COOKIE['captain']);
                 ?>
                 <script type="text/javascript">
                     jQuery(function($){
-                        jQuery('.captain_mobile_number').val(<?php echo $phone_number;?>);
-                        $('.wpforms-submit').on('click', function(){
-                            setTimeout(function(){
-                            location.href = "<?php echo trim($start_url);?>";
-                            //window.location.reload();
-                            }, 4000);
-                        });
+                        jQuery('.captain_mobile_number input').val(<?php echo $phone_number; ?>);
+                        // $('.wpforms-submit').on('click', function(){
+                        //     setTimeout(function(){
+                        //     location.href = "<?php //echo trim($start_url); ?>";
+                        //     //window.location.reload();
+                        //     }, 4000);
+                        // });
                     });
-                
-                    </script>
-                
+                </script>
                 <?php
-                }
-        }, 30 );
+            }
+        }, 30);
 
         /**
          * Add additional formats for the Date field Date Picker.
          *
          * @link   https://wpforms.com/developers/how-to-create-additional-formats-for-the-date-field/
          */
-        add_filter( 'wpforms_datetime_date_formats', function($formats){
-            $formats[ 'l, J F Y' ] = 'l, jS F Y';
+        add_filter('wpforms_datetime_date_formats', function ($formats) {
+            $formats['l, J F Y'] = 'l, jS F Y';
             // Adds new format Monday, 16/Dec/21
-            $formats[ 'd/M/y'] = 'd/M/y';
+            $formats['d/M/y'] = 'd/M/y';
             return $formats;
-        }, 10, 1 );
-        add_action( 'wpforms_display_submit_before', function( $form_data ) {
-            //$captain_mobile_number = isset($)
-            echo '<input type="hidden" name="captain_mobile_number" class="captain_mobile_number" value="">';
-            echo do_shortcode('[block id="dnd-opens-wa-message-form"]<br>');
-        }, 10, 1 );
-        
-                
+        }, 10, 1);
     }
 }
 new Chotu_WPForms();

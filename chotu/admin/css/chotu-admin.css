@@ -12,9 +12,6 @@
 td.whats_app.column-whats_app {
     font-size: 27px;
 }
-#profile-page #yoast-seo-schema{
-    display: none;
-}
 tr.user-description-wrap {
     display: none;
 }
@@ -23,4 +20,7 @@ div#postcustom {
 }
 .site_config_page table tr td input[type="text"], .site_config_page table tr td textarea {
     width: 50%;
+}
+th#product_ID, .manage-column.column-attachment_id, .manage-column.column-ID {
+    width: 5%;
 }

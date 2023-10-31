@@ -50,8 +50,8 @@ class Chotu_Admin{
 		$this->version = $version;
 
 	}
-
-    /**
+	
+	/**
 	 * Register the stylesheets for the admin area.
 	 *
 	 * @since    1.0.0
@@ -97,7 +97,6 @@ class Chotu_Admin{
 
 	}
 
-
 	/**
 	 * chotu_main_theme_setup
 	 *
@@ -105,22 +104,30 @@ class Chotu_Admin{
 	 * to add custom size for an image for whatsapp sharing
 	 */
 	public function chotu_theme_setup() {
-	    add_image_size( 'wa_share', 400,210,true ); // 300 pixels wide (and unlimited height)
+		add_image_size( 'wa_share', 400, 210, true ); 
 	    add_theme_support( 'woocommerce', array(
-			'thumbnail_image_width' => 300,
+			'thumbnail_image_width' 		=> 300,
 			'gallery_thumbnail_image_width' => 100,
-			'single_image_width' => 600,
-			) );
+			'single_image_width' 			=> 600,
+		) );
   		/*  Register menus. */
 		register_nav_menus( array(
-			'enduser_chotu_menu'        => __( 'A - End User Chotu Menu', 'flatsome' ),
-			'enduser_shop_menu'        => __( 'B - End User Shop Menu', 'flatsome' ),
-			'captain_loggedin_menu'        => __( 'C - Captain Logged in Menu', 'flatsome' ),
+			'enduser_shop_menu'        		=> __( 'B - End User Shop Menu', 'flatsome' ),
+			'captain_loggedin_menu'        	=> __( 'C - Captain Logged in Menu', 'flatsome' ),
 		) );
+		/**
+		 * make rootshop support UX Builder
+		 */
+		if ( function_exists( 'add_ux_builder_post_type' ) ) {
+			add_ux_builder_post_type( 'rootshop' );
+		}
 	}
 
-
-	//  to remove the images of size which are not required by chotu
+	/**
+	 * chotu_remove_plugin_image_sizes
+	 * remove the thumbnail sizes which are not required by chotu
+	 * @return void
+	 */
 	public function chotu_remove_plugin_image_sizes(){
 		remove_image_size('thumbnail');
 	    remove_image_size('medium');
@@ -128,22 +135,23 @@ class Chotu_Admin{
 	    remove_image_size('large');
 	    remove_image_size('2048x2048');
 	    remove_image_size('1536x1536');
-	    // remove_image_size('woocommerce_single');
 	    remove_image_size('dgwt-wcas-product-suggestion');
 	}
-
-
-	//  to disable plugin image sizes which are no longer used by chotu
+ 
+	/**
+	 * chotu_disable_plugin_image_sizes
+	 * to disable plugin image sizes which are no longer used by chotu	
+	 * @param  mixed $sizes
+	 * @return void
+	 */
 	public function chotu_disable_plugin_image_sizes($sizes) {
-		unset($sizes['thumbnail']); // disable thumbnail size
-		unset($sizes['medium']); // disable thumbnail size
-		unset($sizes['medium_large']); // disable thumbnail size
-		unset($sizes['large']); // disable thumbnail size
-		unset($sizes['2048x2048']); // disable thumbnail size
-		unset($sizes['1536x1536']); // disable thumbnail size
-		// unset($sizes['woocommerce_single']); // disable thumbnail size
-		unset($sizes['dgwt-wcas-product-suggestion']); // disable thumbnail size
+		unset($sizes['thumbnail']); 
+		unset($sizes['medium']); 
+		unset($sizes['medium_large']); 
+		unset($sizes['large']); 
+		unset($sizes['2048x2048']); 
+		unset($sizes['1536x1536']); 
+		unset($sizes['dgwt-wcas-product-suggestion']); 
 		return $sizes;
-
 	}	
 }

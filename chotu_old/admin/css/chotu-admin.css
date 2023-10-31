@@ -1,0 +1,26 @@
+/**
+ * All of the CSS for your admin-specific functionality should be
+ * included in this file.
+ */
+ #the-list .button.button-alert.status_action {
+    color: #fff;
+    background-color: red;
+    border-color: red;
+    vertical-align: middle;
+    margin-top: 3px;
+}
+td.whats_app.column-whats_app {
+    font-size: 27px;
+}
+#profile-page #yoast-seo-schema{
+    display: none;
+}
+tr.user-description-wrap {
+    display: none;
+}
+div#postcustom {
+    display: none;
+}
+.site_config_page table tr td input[type="text"], .site_config_page table tr td textarea {
+    width: 50%;
+}

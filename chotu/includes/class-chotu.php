@@ -80,7 +80,6 @@ class Chotu
         $this->set_locale();
         $this->define_admin_hooks();
         $this->define_public_hooks();
-
     }
 
     /**
@@ -118,8 +117,6 @@ class Chotu
          * The class responsible for defining all actions that occur in the admin area.
          */
         require_once plugin_dir_path(dirname(__FILE__)) . 'admin/class-chotu-admin.php';
-        // require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/user_list/user-list.php';
-        // require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/inc/chotu_site_config.php';
 
         /**
          * The class responsible for defining all actions
@@ -130,14 +127,10 @@ class Chotu
         /**
          * admin classes files include here
          * */
-        
-        require_once plugin_dir_path(dirname(__FILE__)) . 'admin/includes/class-chotu_captain.php';
         require_once plugin_dir_path(dirname(__FILE__)) . 'admin/includes/class-chotu_product.php';
+        require_once plugin_dir_path(dirname(__FILE__)) . 'admin/includes/class-all_post_type.php';
+        require_once plugin_dir_path(dirname(__FILE__)) . 'admin/includes/class-product_taxonomy.php';
         
-        require_once plugin_dir_path(dirname(__FILE__)) . 'admin/includes/class-chotu_rootshop.php';
-        require_once plugin_dir_path(dirname(__FILE__)) . 'admin/includes/class-chotu_rootshop_cat.php';
-        require_once plugin_dir_path(dirname(__FILE__)) . 'admin/includes/class-chotu_rootshop_tag.php';
-        require_once plugin_dir_path(dirname(__FILE__)) . 'admin/includes/class-chotu-site-config.php';
         /**
          * public  classes files include here
          * */
@@ -148,16 +141,10 @@ class Chotu
 
             require_once plugin_dir_path(dirname(__FILE__)) . 'public/includes/class-chotu_product.php';
             require_once plugin_dir_path(dirname(__FILE__)) . 'public/includes/class-chotu_product_taxonomy.php';
-            require_once plugin_dir_path(dirname(__FILE__)) . 'public/includes/class-chotu_rootshop.php';
-            require_once plugin_dir_path(dirname(__FILE__)) . 'public/includes/class-chotu_rootshop_taxonomy.php';
-        
-            require_once plugin_dir_path(dirname(__FILE__)) . 'includes/shortcodes.php';
-            require_once plugin_dir_path(dirname(__FILE__)) . 'includes/class-chotu_rootshop_shortcodes.php';
-            require_once plugin_dir_path(dirname(__FILE__)) . 'includes/class-chotu_shortcode_rootshops.php';
+
             require_once plugin_dir_path(dirname(__FILE__)) . 'public/includes/class-chotu-cart.php';
             require_once plugin_dir_path(dirname(__FILE__)) . 'public/includes/class-chotu-wpforms.php';
-        
-            chotu_rootshop_shortcodes::init();
+            
         }
         $this->loader = new Chotu_Loader();
 
@@ -212,24 +199,19 @@ class Chotu
 
         $this->loader->add_action('wp_enqueue_scripts', $plugin_public, 'enqueue_styles');
         $this->loader->add_action('wp_enqueue_scripts', $plugin_public, 'enqueue_scripts');
-        $this->loader->add_action('wp_ajax_chotu_update_captain_cp_and_pp', $plugin_public, 'chotu_update_captain_cp_and_pp');
-        $this->loader->add_action('wp_ajax_nopriv_chotu_update_captain_cp_and_pp', $plugin_public, 'chotu_update_captain_cp_and_pp');
-        
-        $this->loader->add_action('wp_ajax_chotu_remove_gallery_image', $plugin_public, 'chotu_remove_gallery_image');
-        $this->loader->add_action('wp_ajax_chotu_remove_gallery_image', $plugin_public, 'chotu_remove_gallery_image');
-        
-        $this->loader->add_action('wc_ajax_chotu_get_captain', $plugin_public, 'chotu_get_captain');
-        // $this->loader->add_action('wp_ajax_nopriv_chotu_get_captain', $plugin_public, 'chotu_get_captain');
 
+        $this->loader->add_action('wp_ajax_chotu_update_captain_pics', $plugin_public, 'chotu_update_captain_pics');
+        $this->loader->add_action('wp_ajax_nopriv_chotu_update_captain_pics', $plugin_public, 'chotu_update_captain_pics');
+        
+        $this->loader->add_action('wp_ajax_chotu_remove_gallery_image', $plugin_public, 'chotu_remove_gallery_image');
+        $this->loader->add_action('wp_ajax_nopriv_chotu_remove_gallery_image', $plugin_public, 'chotu_remove_gallery_image');
+        
         $this->loader->add_filter('template_include', $plugin_public, 'chotu_return_shop_template');
         $this->loader->add_filter('auth_cookie_expiration', $plugin_public, 'chotu_set_captain_login_expiration', 99, 3);
         
         $this->loader->add_action('wp_ajax_chotu_get_captain_vCard', $plugin_public, 'chotu_get_captain_vCard');
         $this->loader->add_action('wp_ajax_nopriv_chotu_get_captain_vCard', $plugin_public,'chotu_get_captain_vCard');
-        
-        $this->loader->add_action('wc_ajax_chotu_product_items', $plugin_public, 'chotu_cart_trans_text_cart_session' );
-        // $this->loader->add_action('wp_ajax_nopriv_chotu_product_items', $plugin_public, 'chotu_cart_trans_text_cart_session' );
-        //$this->loader->add_action('init', $plugin_public,'chotu_reset_captain_pages',30);
+
     }
 
     /**

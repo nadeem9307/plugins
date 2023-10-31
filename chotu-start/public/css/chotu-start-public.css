@@ -1,0 +1,14 @@
+/**
+ * All of the CSS for your public-facing functionality should be
+ * included in this file.
+ */
+
+ .header-main li.html.custom { display: block !important ; }
+ #logo { width: auto !important; }
+.medium-logo-center .logo { margin: none !important; }
+.logo-left .logo { margin-right: none !important; }
+.medium-logo-center .flex-left { flex: unset !important; }
+.medium-logo-center .logo { margin: none !important; }
+.woocommerce-billing-fields {
+    display: none;
+}

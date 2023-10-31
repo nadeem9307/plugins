@@ -13,11 +13,11 @@
  * @package           Chotu
  *
  * @wordpress-plugin
- * Plugin Name:       chotu
+ * Plugin Name:       Chotu
  * Plugin URI:        chotu.com
- * Description:       This is a short description of what the plugin does. It's displayed in the WordPress admin area.
- * Version:           1.4.8
- * Author:            Mohd Nadeem
+ * Description:       Take orders on WhatsApp
+ * Version:           5.0.2
+ * Author:            Mohd Nadeem, Sindhu Raghu
  * Author URI:        chotu.com
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
@@ -26,8 +26,8 @@
  */
 
 // If this file is called directly, abort.
-if ( ! defined( 'WPINC' ) ) {
-	die;
+if (!defined('WPINC')) {
+    die;
 }
 
 /**
@@ -35,40 +35,42 @@ if ( ! defined( 'WPINC' ) ) {
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'CHOTU_VERSION', '1.4.8' );
+define('CHOTU_VERSION', '5.0.2');
 define('CHOTU_PLUGIN_DIR', plugin_dir_url(__FILE__));
 /**
  * The code that runs during plugin activation.
  * This action is documented in includes/class-chotu-activator.php
  */
-function activate_chotu() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-chotu-activator.php';
-	Chotu_Activator::activate();
+function activate_chotu()
+{
+    require_once plugin_dir_path(__FILE__) . 'includes/class-chotu-activator.php';
+    Chotu_Activator::activate();
 }
 
 /**
  * The code that runs during plugin deactivation.
  * This action is documented in includes/class-chotu-deactivator.php
  */
-function deactivate_chotu() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-chotu-deactivator.php';
-	Chotu_Deactivator::deactivate();
+function deactivate_chotu()
+{
+    require_once plugin_dir_path(__FILE__) . 'includes/class-chotu-deactivator.php';
+    Chotu_Deactivator::deactivate();
 }
 
-register_activation_hook( __FILE__, 'activate_chotu' );
-register_deactivation_hook( __FILE__, 'deactivate_chotu' );
+register_activation_hook(__FILE__, 'activate_chotu');
+register_deactivation_hook(__FILE__, 'deactivate_chotu');
 
 /**
  * The core plugin class that is used to define internationalization,
  * admin-specific hooks, and public-facing site hooks.
  */
-require_once plugin_dir_path(__FILE__ ) . 'includes/chotu-core-functions.php';
-require plugin_dir_path( __FILE__ ) . 'includes/class-chotu.php';
-require_once plugin_dir_path( __FILE__ ) . 'vendor/autoload.php';
+require_once plugin_dir_path(__FILE__) . 'vendor/autoload.php';
+require_once plugin_dir_path(__FILE__) . 'includes/chotu-core-functions.php';
+require plugin_dir_path(__FILE__) . 'includes/class-chotu.php';
+require plugin_dir_path(__FILE__) . 'public/includes/class-qr_generation.php';
 
 
 //require plugin_dir_path( __FILE__ ) . 'includes/chotu-shop-classes/abstracts/abstract-chotu-term.php';
-
 
 /**
  * Begins execution of the plugin.
@@ -79,8 +81,9 @@ require_once plugin_dir_path( __FILE__ ) . 'vendor/autoload.php';
  *
  * @since    1.0.0
  */
-function run_chotu() {
-	$plugin = new Chotu();
-	$plugin->run();
+function run_chotu()
+{
+    $plugin = new Chotu();
+    $plugin->run();
 }
 run_chotu();
